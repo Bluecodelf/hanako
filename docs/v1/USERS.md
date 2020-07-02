@@ -32,6 +32,8 @@ following values:
   * `CP`: Corresponds to a corporation or a business. In legal terms, this corresponds to a commercial partnership
 (LP and derivatives), a limited liability company (LLC and derivatives) or a corporation (Corp., Inc. and derivatives).
   * `CO`: Corresponds to a non-profit organization, foundation or association.
+  * `GV`: A governmental entity, belonging to a recognized or unrecognized state.
+  * `GL`: An official or non-official entity with a legal purpose, such as a tribunal or auditor.
 * `firstName` (optional): The first name of the individual, or the first name of the representative for other entities.
 * `lastName` (optional): The last name of the individual, or the last name of the representation for other entities.
 * `legalName` (optional): The full legal name of the entity, if it is different than the `firstName + lastName`
