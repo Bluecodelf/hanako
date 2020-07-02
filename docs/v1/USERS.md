@@ -25,13 +25,13 @@ generated.
 * `email` (required): The email associated with the user resource. Must be unique.
 * `civility` (optional): The non-legal civility that matches the entity associated with a user the most. Can have the
 following values:
-** `MR`: Corresponds to a male individual.
-** `MS`: Corresponds to a female individual.
-** `MO`: Corresponds to an individual identifying as neither male nor female.
-** `CI`: Corresponds to a one-person commercial entity (e.g. a freelance).
-** `CP`: Corresponds to a corporation or a business. In legal terms, this corresponds to a commercial partnership
+  * `MR`: Corresponds to a male individual.
+  * `MS`: Corresponds to a female individual.
+  * `MO`: Corresponds to an individual identifying as neither male nor female.
+  * `CI`: Corresponds to a one-person commercial entity (e.g. a freelance).
+  * `CP`: Corresponds to a corporation or a business. In legal terms, this corresponds to a commercial partnership
 (LP and derivatives), a limited liability company (LLC and derivatives) or a corporation (Corp., Inc. and derivatives).
-** `CO`: Corresponds to a non-profit organization, foundation or association.
+  * `CO`: Corresponds to a non-profit organization, foundation or association.
 * `firstName` (optional): The first name of the individual, or the first name of the representative for other entities.
 * `lastName` (optional): The last name of the individual, or the last name of the representation for other entities.
 * `legalName` (optional): The full legal name of the entity, if it is different than the `firstName + lastName`
@@ -40,7 +40,7 @@ concatenation.
 * `password` (required): The hash of the user's password, salted with the `salt` attribute.
 * `lastLogin` (optional): The date at which the user last logged in.
 * `status` (required): The status of the user, being one of the following:
-** `STD`: The user is a standard user.
-** `ADM`: The user is an administrator. This status means that the user will be able to bypass any user rights or groups
+  * `STD`: The user is a standard user.
+  * `ADM`: The user is an administrator. This status means that the user will be able to bypass any user rights or groups
 system that might be used throughout the Tiwind Software ecosystem.
-** `DSB`: The user is disabled and cannot log in or do any operational action.
+  * `DSB`: The user is disabled and cannot log in or do any operational action.
