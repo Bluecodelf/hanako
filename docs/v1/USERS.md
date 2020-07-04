@@ -44,7 +44,6 @@ Is randomly generated when creating a new user, or when the password is changed 
 for more details). Should not be accessible or modified by the user.
 * `password` (required): The hash of the user's password, salted with the `salt` attribute. Stored as a hash in the
 underlying store. Should not be accessible by the user.
-* `lastLogin` (optional): The date at which the user last logged in.
 * `status` (required): The status of the user, being one of the following:
   * `STD`: The user is a standard user.
   * `ADM`: The user is an administrator. This status means that the user will be able to bypass any user rights or
