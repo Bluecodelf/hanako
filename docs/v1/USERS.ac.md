@@ -103,3 +103,11 @@
 * When that user is deleted
 * And the user is retrieved
 * Then the user should not exist anymore
+
+### AC-USERS-18: Users should be paginated
+
+* Given two existing users
+* When a first page of one user is retrieved
+* And a second page of one user is retrieved
+* Then the first page response should contain only one user
+* And the second page response should contain the other user

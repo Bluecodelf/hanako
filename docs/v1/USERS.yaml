@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: Hanako Users API
+  description: Hanako API to create, get and manage users.
+  version: 0.0.1
+
+components:
+  schemas:
+    Civility:
+      type: string
+      enum: &CIVILITY
+        - MR
+        - MS
+        - MO
+        - CI
+        - CP
+        - CO
+        - GV
+        - GL
+      description: >
+        Civility:
+         * `MR` - A male individual.
+         * `MS` - A female individual.
+         * `MO` - An individual identifying as neither male nor female.
+         * `CI` - A one-person commercial entity (e.g. a freelance).
+         * `CP` - A corporation or a business. In legal terms, this corresponds to a commercial partnership (LP and derivatives), a limited liability company (LLC and derivatives) or a corporation (Corp., Inc. and derivatives).
+         * `CO` - A non-profit organization, foundation or association.
+         * `GV` - A governmental entity, belonging to a recognized or unrecognized state.
+         * `GL` - An official or non-official entity with a legal purpose, such as a tribunal or auditor.
+    Status:
+      type: string
+      enum: &STATUS
+        - STD
+        - ADM
+        - DSB
+      description: >
+        Status:
+         * `STD` - A standard user.
+         * `ADM` - An administrator. This status means that the user will be able to bypass any user rights or groups system that might be used throughout the Tiwind Software ecosystem.
+         * `DSB` - A disabled user. This status means that the user cannot log in or do any operational action.
+
+paths:
+  /users:
+    get:
+      summary: Returns a list of users
+      description: Get a list of users from Hanako
+      responses:
+        '200':
+          description: Successfully retrieved a list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: The unique identifier of the user.
+                    username:
+                      type: string
+                      example: 'john.doe'
+                      description: The unique usermame of the user.
+                    email:
+                      type: string
+                      format: email
+                      example: 'john.doe@example.com'
+                      description: The unique email of the user.
+                    civility:
+                      type: string
+                      enum: *CIVILITY
+                      example: 'MR'
+                      description: The civility of the user.
+                    firstName:
+                      type: string
+                      example: 'John'
+                      description: The first name of the user.
+                    lastName:
+                      type: string
+                      example: 'Doe'
+                      description: The last name of the user.
+                    legalName:
+                      type: string
+                      example: 'John Doe'
+                      description: The legal name of the user.
+                    status:
+                      type: string
+                      enum: *STATUS
+                      example: 'MR'
+                      description: The status of the user.
