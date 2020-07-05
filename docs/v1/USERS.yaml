@@ -6,9 +6,41 @@ info:
 
 components:
   schemas:
+    UserView:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the user.
+        username:
+          type: string
+          example: 'john.doe'
+          description: The unique usermame of the user.
+        email:
+          type: string
+          format: email
+          example: 'john.doe@example.com'
+          description: The unique email of the user.
+        civility:
+          $ref: '#/components/schemas/Civility'
+        firstName:
+          type: string
+          example: 'John'
+          description: The first name of the user.
+        lastName:
+          type: string
+          example: 'Doe'
+          description: The last name of the user.
+        legalName:
+          type: string
+          example: 'John Doe'
+          description: The legal name of the user.
+        status:
+          $ref: '#/components/schemas/Status'
     Civility:
       type: string
-      enum: &CIVILITY
+      enum:
         - MR
         - MS
         - MO
@@ -18,7 +50,7 @@ components:
         - GV
         - GL
       description: >
-        Civility:
+        The civility of the user, being one of:
          * `MR` - A male individual.
          * `MS` - A female individual.
          * `MO` - An individual identifying as neither male nor female.
@@ -27,17 +59,19 @@ components:
          * `CO` - A non-profit organization, foundation or association.
          * `GV` - A governmental entity, belonging to a recognized or unrecognized state.
          * `GL` - An official or non-official entity with a legal purpose, such as a tribunal or auditor.
+      example: 'MR'
     Status:
       type: string
-      enum: &STATUS
+      enum:
         - STD
         - ADM
         - DSB
       description: >
-        Status:
+        The status of the user, being one of:
          * `STD` - A standard user.
          * `ADM` - An administrator. This status means that the user will be able to bypass any user rights or groups system that might be used throughout the Tiwind Software ecosystem.
          * `DSB` - A disabled user. This status means that the user cannot log in or do any operational action.
+      example: 'STD'
 
 paths:
   /users:
@@ -70,43 +104,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uuid
-                      description: The unique identifier of the user.
-                    username:
-                      type: string
-                      example: 'john.doe'
-                      description: The unique usermame of the user.
-                    email:
-                      type: string
-                      format: email
-                      example: 'john.doe@example.com'
-                      description: The unique email of the user.
-                    civility:
-                      type: string
-                      enum: *CIVILITY
-                      example: 'MR'
-                      description: The civility of the user.
-                    firstName:
-                      type: string
-                      example: 'John'
-                      description: The first name of the user.
-                    lastName:
-                      type: string
-                      example: 'Doe'
-                      description: The last name of the user.
-                    legalName:
-                      type: string
-                      example: 'John Doe'
-                      description: The legal name of the user.
-                    status:
-                      type: string
-                      enum: *STATUS
-                      example: 'MR'
-                      description: The status of the user.
+                  $ref: '#/components/schemas/UserView'
         '400':
           description: The received user request is invalid.
           content:
@@ -117,9 +115,63 @@ paths:
                   code:
                     oneOf:
                       - $ref: './CORE.yaml#/components/schemas/CoreErrorCode'
+                    example: 'CORE.002'
                   attribute:
                     type: string
                     description: The first attribute that made the request fail, if any.
+                    example: 'limit'
                   description:
                     type: string
                     description: A human readable description of what went wrong with the request in details.
+                    example: 'The limit pagination attribute cannot be greater than 100.'
+    post:
+      summary: Create a new user.
+      description: Create a new user in the Hanako backend.
+      requestBody:
+        description: The payload used to create users.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                  description: The unique username of the user.
+                  example: 'john.doe'
+                email:
+                  type: string
+                  format: email
+                  required: true
+                  description: The unique email of the user.
+                  example: 'john.doe@example.com'
+                civility:
+                  $ref: '#/components/schemas/Civility'
+                firstName:
+                  type: string
+                  required: false
+                  description: The first name of the user.
+                  example: 'John'
+                lastName:
+                  type: string
+                  required: false
+                  description: The last name of the user.
+                  example: 'Doe'
+                legalName:
+                  type: string
+                  required: false
+                  description: The legal name of the user.
+                  example: 'John Doe'
+                password:
+                  type: string
+                  required: true
+                  description: The password of the user.
+                  example: 'sup3rS3cr3tP455w0rd'
+      responses:
+        '201':
+          description: Successfully created the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/UserView'
