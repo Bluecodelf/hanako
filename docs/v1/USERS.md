@@ -22,8 +22,9 @@ represent, and thus the entity should be able to ask for the fetching or deletio
 An user resource may contain the following attributes:
 * `id` (required): A unique identifier for the user resource. Must be non-sequential and unique, and should be randomly
 generated at creation time. Cannot be modified by the user.
-* `username` (required): A username for the user resource. Must be unique, and cannot be modified.
-* `email` (required): The email associated with the user resource. Must be unique.
+* `username` (required): A username for the user resource. Must be unique and cannot contain more than 32 characters.
+* `email` (required): The email associated with the user resource. Must be unique and cannot contain more than
+512 characters.
 * `civility` (optional): The non-legal civility that matches the entity associated with a user the most. This attribute
 can have the following values:
   * `MR`: Corresponds to a male individual.
@@ -36,9 +37,11 @@ can have the following values:
   * `GV`: A governmental entity, belonging to a recognized or unrecognized state.
   * `GL`: An official or non-official entity with a legal purpose, such as a tribunal or auditor.
 * `firstName` (optional): The first name of the individual, or the first name of the representative for other entities.
+Cannot contain more than 512 characters.
 * `lastName` (optional): The last name of the individual, or the last name of the representation for other entities.
+Cannot contain more than 512 characters.
 * `legalName` (optional): The full legal name of the entity, if it is different than the `firstName + lastName`
-concatenation.
+concatenation. Cannot contain more than 1024 characters.
 * `salt` (required): The hexadecimal representation of the salt that will be used for hashing the user's password.
 Is randomly generated when creating a new user, or when the password is changed (see [annex A.1](#1.-Password-hashing)
 for more details). Should not be accessible or modified by the user.
