@@ -40,7 +40,7 @@ can have the following values:
 Cannot contain more than 512 characters.
 * `lastName` (optional): The last name of the individual, or the last name of the representation for other entities.
 Cannot contain more than 512 characters.
-* `legalName` (optional): The full legal name of the entity, if it is different than the `firstName + lastName`
+* `displayName` (optional): The full display name of the entity, if it is different than the `firstName + lastName`
 concatenation. Cannot contain more than 2048 characters.
 * `salt` (required): The hexadecimal representation of the salt that will be used for hashing the user's password.
 Is randomly generated when creating a new user, or when the password is changed (see [annex A.1](#1.-Password-hashing)

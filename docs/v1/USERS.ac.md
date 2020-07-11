@@ -67,17 +67,17 @@
 * When a user is created with an invalid civility
 * Then it should fail with a bad request (400) reason
 
-### AC-USERS-14: Legal name automatically generated
+### AC-USERS-14: Display name automatically generated
 
-* Given an existing user with a first and last name, but no legal name
+* Given an existing user with a first and last name, but no display name
 * When the user is retrieved
-* Then it should have a legal name composed from the first and last name
+* Then it should have a display name composed from the first and last name
 
-### AC-USERS-15: Legal name overriding first and last name
+### AC-USERS-15: Display name overriding first and last name
 
-* Given an existing user with a first, last and legal name
+* Given an existing user with a first, last and display name
 * When the user is retrieved
-* Then the legal name should be consistent with the stored value
+* Then the display name should be consistent with the stored value
 
 ### AC-USERS-17: Cannot retrieve password
 
@@ -161,34 +161,34 @@
 * When that user is modified with a last name that is too long
 * Then it should fail with a bad request (400) reason
 
-### AC-USERS-31: Cannot create a user with a legal name that's too long
+### AC-USERS-31: Cannot create a user with a display name that's too long
 
-* When a user is created with a legal name that is too long
+* When a user is created with a display name that is too long
 * Then it should fail with a bad request (400) reason
 
-### AC-USERS-32: Cannot modify a user with a legal name that's too long
+### AC-USERS-32: Cannot modify a user with a display name that's too long
 
 * Given an existing user
-* When that user is modified with a legal name that is too long
+* When that user is modified with a display name that is too long
 * Then it should fail with a bad request (400) reason
 
-### AC-USERS-33: Legal name automatically generated from just first name
+### AC-USERS-33: Display name automatically generated from just first name
 
 * Given an existing user with a first name and no last name
 * When that user is retrieved
-* Then it should contain a legal name equal to its first name
+* Then it should contain a display name equal to its first name
 
-### AC-USERS-34: Legal name automatically generated from just last name
+### AC-USERS-34: Display name automatically generated from just last name
 
 * Given an existing user with a last name and no first name
 * When that user is retrieved
-* Then it should contain a legal name equal to its last name
+* Then it should contain a display name equal to its last name
 
-### AC-USERS-35: Legal name with no first name or last name
+### AC-USERS-35: Display name with no first name or last name
 
 * Given an existing user with no last name nor first name
 * When that user is retrieved
-* Then it should contain a legal name equal to its username
+* Then it should contain a display name equal to its username
 
 ### AC-USERS-36: Cannot create a user with an invalid status
 

@@ -35,10 +35,10 @@ components:
           type: string
           example: 'Doe'
           description: The last name of the user. At most 512 characters.
-        legalName:
+        displayName:
           type: string
           example: 'John Doe'
-          description: The legal name of the user. At most 2048 characters.
+          description: The display name of the user. At most 2048 characters.
         password:
           type: string
           writeOnly: true
@@ -106,7 +106,7 @@ components:
          * `USERS.006`: The given email is too long.
          * `USERS.007`: The given first name is too long.
          * `USERS.008`: The given last name is too long.
-         * `USERS.009`: The given legal name is too long.
+         * `USERS.009`: The given display name is too long.
          * `USERS.010`: The given status is unrecognized.
          * `USERS.011`: The user does not exists.
          * `USERS.012`: The given identifier is invalid.
