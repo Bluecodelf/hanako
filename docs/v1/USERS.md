@@ -41,10 +41,10 @@ Cannot contain more than 512 characters.
 * `lastName` (optional): The last name of the individual, or the last name of the representation for other entities.
 Cannot contain more than 512 characters.
 * `legalName` (optional): The full legal name of the entity, if it is different than the `firstName + lastName`
-concatenation. Cannot contain more than 1024 characters.
+concatenation. Cannot contain more than 2048 characters.
 * `salt` (required): The hexadecimal representation of the salt that will be used for hashing the user's password.
 Is randomly generated when creating a new user, or when the password is changed (see [annex A.1](#1.-Password-hashing)
-for more details). Should not be accessible or modified by the user.
+for more details). Is not exposed in the API.
 * `password` (required): The hash of the user's password, salted with the `salt` attribute. Stored as a hash in the
 underlying store. Should not be accessible by the user.
 * `status` (required): The status of the user, being one of the following:

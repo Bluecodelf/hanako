@@ -18,7 +18,7 @@ components:
           type: string
           maxLength: 32
           example: 'john.doe'
-          description: The usermame of the user. Unique and at most 32 characters.
+          description: The username of the user. Unique and at most 32 characters.
         email:
           type: string
           format: email
@@ -38,7 +38,7 @@ components:
         legalName:
           type: string
           example: 'John Doe'
-          description: The legal name of the user. At most 1024 characters.
+          description: The legal name of the user. At most 2048 characters.
         password:
           type: string
           writeOnly: true
@@ -80,6 +80,50 @@ components:
          * `ADM` - An administrator. This status means that the user will be able to bypass any user rights or groups system that might be used throughout the Tiwind Software ecosystem.
          * `DSB` - A disabled user. This status means that the user cannot log in or do any operational action.
       example: 'STD'
+    UserErrorCode:
+      type: string
+      enum:
+        - USERS.001
+        - USERS.002
+        - USERS.003
+        - USERS.004
+        - USERS.005
+        - USERS.006
+        - USERS.007
+        - USERS.008
+        - USERS.009
+        - USERS.010
+        - USERS.011
+        - USERS.012
+        - USERS.013
+      description: >
+        User error codes can have the following values:
+         * `USERS.001`: A user's identifier cannot be manually set.
+         * `USERS.002`: The given username already exists.
+         * `USERS.003`: The given email is already used.
+         * `USERS.004`: The given civility is unrecognized.
+         * `USERS.005`: The given username is too long.
+         * `USERS.006`: The given email is too long.
+         * `USERS.007`: The given first name is too long.
+         * `USERS.008`: The given last name is too long.
+         * `USERS.009`: The given legal name is too long.
+         * `USERS.010`: The given status is unrecognized.
+         * `USERS.011`: The user does not exists.
+         * `USERS.012`: The given identifier is invalid.
+         * `USERS.013`: The given email is invalid.
+      example: 'USERS.001'
+    UserError:
+      type: object
+      properties:
+        code:
+          oneOf:
+            - $ref: './CORE.yaml#/components/schemas/CoreErrorCode'
+            - $ref: '#/components/schemas/UserErrorCode'
+          example: 'USERS.001'
+        description:
+          type: string
+          description: A human readable description of whay went wrong with the request in details.
+          example: 'A user''s identifier cannot be manually set. Remove it from the request and try again.'
 
 paths:
   /users:
@@ -114,7 +158,13 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
         '400':
-          description: The received user request is invalid.
+          description: The user request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: './CORE.yaml#/components/schemas/CoreError'
+        '500':
+          description: There was an internal server error. This is a bug.
           content:
             application/json:
               schema:
@@ -135,21 +185,170 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#components/schemas/User'
+                $ref: '#/components/schemas/User'
         '400':
-          description: The received user request is invalid.
+          description: The request is invalid.
           content:
             application/json:
               schema:
-                $ref: './CORE.yaml#/components/schemas/CoreError'
-        '403':
-          description: The received user request is invalid.
-          content:
-            application/json:
-              schema:
-                $ref: './CORE.yaml#/components/schemas/CoreError'
+                $ref: '#/components/schemas/UserError'
         '409':
           description: One of the given attributes is unique and already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '500':
+          description: There was an internal server error. This is a bug.
+          content:
+            application/json:
+              schema:
+                $ref: './CORE.yaml#/components/schemas/CoreError'
+  /users/{userId}:
+    get:
+      summary: Get a specific user.
+      description: Gets a single user from Hanako.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: uuid
+          required: true
+          description: The UUID of the user to get.
+      responses:
+        '200':
+          description: The user with the given identifier has been retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: The request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '404':
+          description: The user does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '500':
+          description: There was an internal server error. This is a bug.
+          content:
+            application/json:
+              schema:
+                $ref: './CORE.yaml#/components/schemas/CoreError'
+    patch:
+      summary: Partially modify a specific user.
+      description: Partially modifies a specific user in Hanako.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: uuid
+          required: true
+          description: The UUID of the user to modify.
+      responses:
+        '200':
+          description: The user with the given identifier has been modified.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: The user request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '404':
+          description: The user does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '409':
+          description: One of the given attributes is unique and already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '500':
+          description: There was an internal server error. This is a bug.
+          content:
+            application/json:
+              schema:
+                $ref: './CORE.yaml#/components/schemas/CoreError'
+    put:
+      summary: Completely modify a specific user.
+      description: Completely modifies a specific user in Hanako. Note that fields that are not present will be removed.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: uuid
+          required: true
+          description: The UUID of the user to modify.
+      responses:
+        '200':
+          description: The user with the given identifier has been modified.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: The user request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '404':
+          description: The user does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '409':
+          description: One of the given attributes is unique and already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '500':
+          description: There was an internal server error. This is a bug.
+          content:
+            application/json:
+              schema:
+                $ref: './CORE.yaml#/components/schemas/CoreError'
+    delete:
+      summary: Delete a specific user.
+      description: Deletes a specific user in Hanako.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: uuid
+          required: true
+          description: The UUID of the user to delete.
+      responses:
+        '204':
+          description: The user with the given identifier has been deleted.
+        '400':
+          description: The user request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '404':
+          description: The user does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '500':
+          description: There was an internal server error. This is a bug.
           content:
             application/json:
               schema:

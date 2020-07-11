@@ -4,31 +4,19 @@ components:
       type: string
       enum:
         - CORE.000
-        - CORE.001
         - CORE.002
         - CORE.003
-        - CORE.004
-        - CORE.005
-        - CORE.006
       description: >
         Core error codes can have the following values:
          * `CORE.000`: Internal server error. This is due to a bug in Hanako.
-         * `CORE.001`: The request data or arguments is invalid.
-         * `CORE.002`: The `limit` pagination parameter is out-of-bounds.
-         * `CORE.003`: The `offset` pagination parameter is out-of-bounds.
-         * `CORE.004`: The resource already exists (e.g. violates an unique attribute).
-         * `CORE.005`: The resource is not accessible (forbidden).
-         * `CORE.006`: One of the resource attributes is not accessible (forbidden).
+         * `CORE.002`: The `limit` pagination parameter is invalid.
+         * `CORE.003`: The `offset` pagination parameter is invalid.
       example: 'CORE.000'
     CoreError:
       type: object
       properties:
         code:
           $ref: '#/components/schemas/CoreErrorCode'
-        attribute:
-          type: string
-          description: The first attribute that made the request fail, if any.
-          example: ''
         description:
           type: string
           description: A human readable description of what went wrong with the request in details.
