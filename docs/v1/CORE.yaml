@@ -1,0 +1,23 @@
+components:
+  schemas:
+    CoreErrorCode:
+      type: string
+      enum:
+        - CORE.000
+        - CORE.002
+        - CORE.003
+      description: >
+        Core error codes can have the following values:
+         * `CORE.000`: Internal server error. This is due to a bug in Hanako.
+         * `CORE.002`: The `limit` pagination parameter is invalid.
+         * `CORE.003`: The `offset` pagination parameter is invalid.
+      example: 'CORE.000'
+    CoreError:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CoreErrorCode'
+        description:
+          type: string
+          description: A human readable description of what went wrong with the request in details.
+          example: 'Internal server error.'

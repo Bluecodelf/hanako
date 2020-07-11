@@ -50,56 +50,183 @@
 * When a user is created with the other user's identifier
 * Then it should fail with a conflict (409) reason
 
-### AC-USERS-9: Cannot modify user username
-
-* Given an existing user
-* When a user's username is modified
-* Then it should fail with a forbidden (403) reason
-
-### AC-USERS-10: Unique user email
+### AC-USERS-9: Unique user email
 
 * Given an existing user
 * When a user is created with the other user's email
 * Then it should fail with a conflict (409) reason
 
-### AC-USERS-11: Unique user email during modification
+### AC-USERS-10: Unique user email during modification
 
 * Given an existing user
 * When another user is modified with the other user's email
 * Then it should fail with a conflict (409) reason
 
-### AC-USERS-12: User with invalid civility
+### AC-USERS-11: Cannot create user with invalid civility
 
 * When a user is created with an invalid civility
-* Then it should fail with a bad request (401) reason
+* Then it should fail with a bad request (400) reason
 
-### AC-USERS-13: Legal name automatically generated
+### AC-USERS-14: Display name automatically generated
 
-* Given an existing user with a first and last name, but no legal name
+* Given an existing user with a first and last name, but no display name
 * When the user is retrieved
-* Then it should have a legal name composed from the first and last name
+* Then it should have a display name composed from the first and last name
 
-### AC-USERS-14: Legal name overriding first and last name
+### AC-USERS-15: Display name overriding first and last name
 
-* Given an existing user with a first, last and legal name
+* Given an existing user with a first, last and display name
 * When the user is retrieved
-* Then the legal name should be consistent with the stored value
+* Then the display name should be consistent with the stored value
 
-### AC-USERS-15: Cannot retrieve salt
-
-* Given an existing user
-* When the user is retrieved
-* Then the user should not contain a `salt` attribute
-
-### AC-USERS-16: Cannot retrieved password
+### AC-USERS-17: Cannot retrieve password
 
 * Given an existing user
 * When the user is retrieved
 * Then the user should not contain a `password` attribute
 
-### AC-USERS-17: User is deleted
+### AC-USERS-18: User is deleted
 
 * Given an existing user
 * When that user is deleted
 * And the user is retrieved
 * Then the user should not exist anymore
+
+### AC-USERS-19: Users should be paginated
+
+* Given two existing users
+* When a first page of one user is retrieved
+* And a second page of one user is retrieved
+* Then the first page response should contain only one user
+* And the second page response should contain the other user
+
+### AC-USERS-20: Cannot create a user with a username that's too long
+
+* When a user is created with a username that is too long
+* Then it should fail with a bad request (400) reason.
+
+### AC-USERS-21: Cannot modify user with an invalid civility
+
+* Given an existing user
+* When that user is modified with an invalid civility
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-22: Cannot modify a user with a username that's too long
+
+* Given an existing user
+* When that user is modified with a username that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-23: Cannot create a user with an invalid email
+
+* When a user is created with an invalid email (as defined in `RFC-5322`)
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-24: Cannot modify a user with an invalid email
+
+* Given an existing user
+* When that user is modified with an invalid email (as defined in `RFC-5322`)
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-25: Cannot create a user with an email that's too long
+
+* When a user is created with an email that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-26: Cannot modify a user with an email that's too long
+
+* Given an existing user
+* When that user is modified with an email that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-27: Cannot create a user with a first name that's too long
+
+* When a user is created with a first name that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-28: Cannot modify a user with a first name that's too long
+
+* Given an existing user
+* When that user is modified with a first name that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-29: Cannot create a user with a last name that's too long
+
+* When a user is created with a last name that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-30: Cannot modify a user with a last name that's too long
+
+* Given an existing user
+* When that user is modified with a last name that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-31: Cannot create a user with a display name that's too long
+
+* When a user is created with a display name that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-32: Cannot modify a user with a display name that's too long
+
+* Given an existing user
+* When that user is modified with a display name that is too long
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-33: Display name automatically generated from just first name
+
+* Given an existing user with a first name and no last name
+* When that user is retrieved
+* Then it should contain a display name equal to its first name
+
+### AC-USERS-34: Display name automatically generated from just last name
+
+* Given an existing user with a last name and no first name
+* When that user is retrieved
+* Then it should contain a display name equal to its last name
+
+### AC-USERS-35: Display name with no first name or last name
+
+* Given an existing user with no last name nor first name
+* When that user is retrieved
+* Then it should contain a display name equal to its username
+
+### AC-USERS-36: Cannot create a user with an invalid status
+
+* When a user is created with an invalid status
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-37: Cannot modify a user with an invalid status
+
+* Given an existing user
+* When that user is modified with an invalid status
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-38: Cannot retrieve a user that does not exist
+
+* When a user that does not exist is retrieved
+* Then it should fail with a not found (404) reason
+
+### AC-USERS-39: Cannot modify a user that does not exist
+
+* When a user that does not exist is modified
+* Then it should fail with a not found (404) reason
+
+### AC-USERS-40: Cannot delete a user that does not exist
+
+* When a user that does not exist is deleted
+* Then it should fail with a not found (404) reason
+
+### AC-USERS-41: Cannot retrieve a user with an invalid identifier
+
+* When a user with an invalid identifier is retrieved
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-42: Cannot modify a user with an invalid identifier
+
+* When a user with an invalid identifier is modified
+* Then it should fail with a bad request (400) reason
+
+### AC-USERS-43: Cannot delete a user with an invalid identifier
+
+* When a user with an invalid identifier is deleted
+* Then it should fail with a bad request (400) reason
