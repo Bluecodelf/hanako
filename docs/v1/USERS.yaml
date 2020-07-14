@@ -112,14 +112,16 @@ components:
          * `USERS.012`: The given identifier is invalid.
          * `USERS.013`: The given email is invalid.
       example: 'USERS.001'
+    OneOfCoreErrorCodeUserErrorCode:
+      oneOf:
+        - $ref: './CORE.yaml#/components/schemas/CoreErrorCode'
+        - $ref: '#/components/schemas/UserErrorCode'
+      example: 'USERS.001'
     UserError:
       type: object
       properties:
         code:
-          oneOf:
-            - $ref: './CORE.yaml#/components/schemas/CoreErrorCode'
-            - $ref: '#/components/schemas/UserErrorCode'
-          example: 'USERS.001'
+          $ref: '#/components/schemas/OneOfCoreErrorCodeUserErrorCode'
         description:
           type: string
           description: A human readable description of whay went wrong with the request in details.
@@ -212,7 +214,8 @@ paths:
         - in: path
           name: userId
           schema:
-            type: uuid
+            type: string
+            format: uuid
           required: true
           description: The UUID of the user to get.
       responses:
@@ -247,7 +250,8 @@ paths:
         - in: path
           name: userId
           schema:
-            type: uuid
+            type: string
+            format: uuid
           required: true
           description: The UUID of the user to modify.
       responses:
@@ -288,7 +292,8 @@ paths:
         - in: path
           name: userId
           schema:
-            type: uuid
+            type: string
+            format: uuid
           required: true
           description: The UUID of the user to modify.
       responses:
@@ -329,7 +334,8 @@ paths:
         - in: path
           name: userId
           schema:
-            type: uuid
+            type: string
+            format: uuid
           required: true
           description: The UUID of the user to delete.
       responses:
